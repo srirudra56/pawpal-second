@@ -1,6 +1,7 @@
 import streamlit as st
 
 from pawpal_system import Owner, Pet, Task, Scheduler
+from rag_assistant import answer_question
 
 from datetime import date, time
 
@@ -84,10 +85,18 @@ if st.button("Add task"):
 
     warning = scheduler.schedule_task(new_task)
 
-    if warning:
-       st.warning(warning)
-    else:
-      st.success("Task added!")
+if warning:
+    st.warning(warning)
+else:
+    st.session_state.tasks.append(
+        {
+            "Pet": pet_name,
+            "Task": task_title,
+            "Priority": priority,
+            "Duration": duration
+        }
+    )
+    st.success("Task added!")
 
 if st.session_state.tasks:
     st.write("Current tasks:")
@@ -113,3 +122,45 @@ if st.button("Generate schedule"):
             )
     else:
         st.info("No tasks scheduled for today.")
+st.divider()
+
+st.subheader("🐾 Pet Care Recommendation Assistant")
+
+st.write(
+    "Choose a pet-care topic to receive guidance "
+    "from the PawPal knowledge base."
+)
+
+care_topic = st.selectbox(
+    "Choose a topic",
+    [
+        "vet visits",
+        "exercise",
+        "hydration",
+        "sleep",
+        "playtime"
+    ]
+)
+
+if st.button("Get care recommendation"):
+    if not pet_name.strip():
+        st.warning("Enter a pet name.")
+    elif species == "other":
+        st.warning(
+            "The current knowledge base supports dogs and cats only."
+        )
+    else:
+        try:
+            response = answer_question(
+                pet_name=pet_name,
+                pet_type=species,
+                topic=care_topic
+            )
+            st.success(response)
+        except FileNotFoundError:
+            st.error("The pet-care knowledge base could not be found.")
+        except Exception:
+            st.error(
+                "The recommendation could not be generated. "
+                "Please try again."
+            )
