@@ -1,182 +1,270 @@
-# PawPal+ (Module 2 Project)
+# 🐾 PawPal+ AI Pet Care Assistant
 
-You are building **PawPal+**, a Streamlit app that helps a pet owner plan care tasks for their pet.
+## Original Project (Module 2)
 
-## Scenario
+This project extends my **Module 2 PawPal+** object-oriented programming project. The original PawPal+ application helped pet owners organize and schedule pet-care tasks such as walks, feeding, grooming, and other daily activities. It allowed users to create pet-care tasks, detect scheduling conflicts, and generate a daily schedule to help manage their pet's routine.
 
-A busy pet owner needs help staying consistent with pet care. They want an assistant that can:
+For this final project, I expanded PawPal+ by integrating **Retrieval-Augmented Generation (RAG)** to provide AI-powered pet-care recommendations using a structured local knowledge base.
 
-- Track pet care tasks (walks, feeding, meds, enrichment, grooming, etc.)
-- Consider constraints (time available, priority, owner preferences)
-- Produce a daily plan and explain why it chose that plan
+---
 
-Your job is to design the system first (UML), then implement the logic in Python, then connect it to the Streamlit UI.
+# Project Summary
 
-## What you will build
+PawPal+ AI Pet Care Assistant is a pet-care scheduling and recommendation system that combines traditional scheduling with AI-powered information retrieval. In addition to organizing pet-care tasks, the application can answer pet-care questions by retrieving trusted information from a structured knowledge base before generating recommendations.
 
-Your final app should:
+The purpose of this project is to demonstrate how Retrieval-Augmented Generation (RAG) can improve AI reliability by retrieving relevant information before producing a response rather than relying solely on a language model's built-in knowledge.
 
-- Let a user enter basic owner + pet info
-- Let a user add/edit tasks (duration + priority at minimum)
-- Generate a daily schedule/plan based on constraints and priorities
-- Display the plan clearly (and ideally explain the reasoning)
-- Include tests for the most important scheduling behaviors
+---
 
-## Getting started
+# Features
 
-### Setup
+- 🐶 Schedule daily pet-care tasks
+- 🐱 Detect scheduling conflicts
+- 📅 Generate a daily pet-care schedule
+- 🤖 AI-powered pet-care recommendations
+- 📖 Retrieval-Augmented Generation (RAG)
+- 📂 Local JSON knowledge base
+- 🛡️ Input validation and guardrails
+- 📊 Confidence scores for recommendations
+- 📝 Logging for debugging and reliability
+- ✅ Automated unit testing
+
+---
+
+# Architecture Overview
+
+The system consists of several components that work together:
+
+1. The user enters a pet name, species, and pet-care topic through the Streamlit interface.
+2. Input validation (guardrails) checks for missing or invalid information.
+3. The RAG Assistant sends the request to the Retriever.
+4. The Retriever searches the local JSON knowledge base for matching pet-care guidance.
+5. The retrieved guidance and confidence score are returned to the RAG Assistant.
+6. The application generates a recommendation, adds a veterinary safety disclaimer, logs the request, and displays the result to the user.
+
+The complete Mermaid architecture diagram is included in:
+
+```text
+diagrams/architecture.mmd
+```
+
+---
+
+# Project Structure
+
+```
+pawpal-second/
+│
+├── app.py
+├── pawpal_system.py
+├── retrieval.py
+├── rag_assistant.py
+├── logger_config.py
+├── README.md
+├── model_card.md
+├── requirements.txt
+│
+├── data/
+│   └── pet_care_knowledge.json
+│
+├── test/
+│   └── test_pawpal.py
+│
+├── diagrams/
+│   └── architecture.mmd
+│
+├── assets/
+│
+└── logs/
+```
+
+---
+
+# Setup Instructions
+
+## Clone the repository
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
+cd YOUR_REPOSITORY
+```
+
+## Install dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-### Suggested workflow
-
-1. Read the scenario carefully and identify requirements and edge cases.
-2. Draft a UML diagram (classes, attributes, methods, relationships).
-3. Convert UML into Python class stubs (no logic yet).
-4. Implement scheduling logic in small increments.
-5. Add tests to verify key behaviors.
-6. Connect your logic to the Streamlit UI in `app.py`.
-7. Refine UML so it matches what you actually built.
-
-## 🖥️ Sample Output
-
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
-
-## Sample Output
-
-```text
-Today's Schedule
------------------
-08:00 AM | Buddy | Morning Walk (Walk)
-08:30 AM | Buddy | Feed Breakfast (Feeding)
-06:00 PM | Luna | Brush Fur (Grooming)
-```
-
-```
-# e.g.:
-# Daily plan for Biscuit (Golden Retriever):
-#   08:00 — Morning walk (30 min) [priority: high]
-#   09:00 — Feeding (10 min) [priority: high]
-#   ...
-```
-
-## 🧪 Testing PawPal+
+## Run the application
 
 ```bash
-# Run the full test suite:
-pytest
-
-# Run with coverage:
-pytest --cov
+python3 -m streamlit run app.py
 ```
 
-Sample test output:
+## Run automated tests
 
-Used:
-
+```bash
 python3 -m pytest
-
-The tests verify:
-
--marking a task as complete
--adding a task to a pet
--sorting tasks in chronological order
--creating the next occurrence of a daily recurring task
--detecting scheduling conflicts
-
-Confidence:
-
-5 stars
-I have a high level of confidence in PawPal+ because the automated tests verify the system's main scheduling behaviors and all tests pass successfully.
-
 ```
-# Paste your pytest output here
+
+---
+
+# Sample Interactions
+
+## Example 1
+
+### Input
+
+```text
+Pet Name: Buddy
+Species: Dog
+Topic: Exercise
 ```
-========================================= test session starts =========================================
-platform darwin -- Python 3.12.5, pytest-9.0.3, pluggy-1.6.0
-rootdir: /Users/srirudrapatlori/ai110-module2show-pawpal-starter
-plugins: anyio-4.13.0
-collected 5 items                                                                                     
 
-test/test_pawpal.py .....                                                                       [100%]
+### Output
 
-========================================== 5 passed in 0.02s ==========================================
+```text
+Recommendation for Buddy
 
-## 📐 Smarter Scheduling
+Regular exercise helps dogs maintain a healthy weight and provides mental stimulation.
 
+Confidence Score: 97%
 
-| Feature | Method(s) | Notes |
-|---------|-----------|-------|
-| Task sorting | Scheduler.sort_by_time() | sorts tasks by earliest to latest using each task's scheduled time |
-| Filtering | Scheduler.filter_by_pet() and Scheduler.filter_by_status() | Filters tasks by pet names or by completed/incomplete status |
-| Conflict handling | Scheduler.check_conflict() and Scheduler.schedule_task() | Checks for tasks within the same date and time and returns a warning message |
-| Recurring tasks | Task.mark_complete() | Creates the next occurence for daily tasks after 1 day and weekly tasks after 7 days |
+For medical concerns or personalized care, please consult a veterinarian.
+```
 
-## 📸 Demo Walkthrough
+---
 
-1. Add and manage multiple pets.
-2. Create and schedule pet care tasks.
-3. Sort tasks by scheduled time using Scheduler.sort_by_time().
-4. Filter tasks by pet name using Scheduler.filter_by_pet().
-5. Filter tasks by completion status using Scheduler.filter_by_status().
-6. Detect scheduling conflicts and display warning messages using Scheduler.check_conflict().
-7. Support recurring daily and weekly tasks through Task.mark_complete().
-8. View today's scheduled tasks in chronological order.
+## Example 2
 
-The PawPal+ interface allows users to:
+### Input
 
-Enter owner and pet information.
-Create pet care tasks.
-Generate and view a daily schedule.
-Receive warnings when scheduling conflicting tasks.
-View tasks in chronological order.
+```text
+Pet Name: Luna
+Species: Cat
+Topic: Sleep
+```
 
-Example Workflow
--Enter the owner's and pet's information.
--Create several pet care tasks.
--Schedule the tasks.
--Generate today's schedule.
--View the tasks sorted by time.
--If two tasks are scheduled for the same date and time, the scheduler displays a conflict warning.
--Mark recurring tasks as complete to automatically generate the next daily or weekly occurrence.
+### Output
 
-Scheduler Behaviors:
--Automatically sorts tasks from earliest to latest.
--Filters tasks by pet and completion status.
--Detects scheduling conflicts at the same date and time.
--Generates recurring daily and weekly tasks automatically.
--Displays today's scheduled tasks.
+```text
+Recommendation for Luna
 
-Tasks Sorted by Time
---------------------
-08:00 AM | Luna | Breakfast
-10:00 AM | Buddy | Morning Walk
-02:00 PM | Buddy | Feed Buddy
-02:00 PM | Luna | Brush Luna
-06:00 PM | Buddy | Evening Walk
-06:00 PM | Buddy | Evening Walk
+Adult cats commonly sleep about 12–16 hours each day, while kittens may sleep up to 20 hours.
 
-Buddy's Tasks
--------------
-06:00 PM | Evening Walk
-10:00 AM | Morning Walk
-02:00 PM | Feed Buddy
-06:00 PM | Evening Walk
+Confidence Score: 93%
 
-Incomplete Tasks
-----------------
-Buddy | Morning Walk
-Buddy | Feed Buddy
-Luna | Brush Luna
-Buddy | Evening Walk
+For medical concerns or personalized care, please consult a veterinarian.
+```
 
-Completed Tasks
----------------
-Buddy | Evening Walk
-Luna | Breakfast
+---
 
-**Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->
+## Example 3
+
+### Input
+
+```text
+Pet Name:
+Species: Dog
+Topic: Hydration
+```
+
+### Output
+
+```text
+Warning
+
+Please enter a pet name.
+```
+
+---
+
+# Design Decisions
+
+I chose Retrieval-Augmented Generation (RAG) because it allows the application to retrieve information from a structured pet-care knowledge base before generating recommendations. This approach makes responses more consistent, explainable, and easier to maintain than relying only on a language model.
+
+A local JSON file was used as the knowledge base because it is lightweight, simple to update, and appropriate for the project's scope. One trade-off of this design is that retrieval currently uses exact topic matching instead of semantic search or vector embeddings.
+
+---
+
+# Reliability and Testing
+
+The PawPal+ AI Pet Care Assistant includes several mechanisms to improve reliability:
+
+- Automated unit tests verify the core scheduling functionality.
+- Confidence scores indicate how confidently the system matched the user's request to the knowledge base.
+- Input validation (guardrails) prevents invalid requests from being processed.
+- Logging records successful retrievals and application errors for debugging.
+
+## Automated Unit Tests
+
+The project includes five automated tests that validate the original PawPal+ scheduling system.
+
+| Test | Purpose | Result |
+|------|---------|--------|
+| `test_mark_complete` | Verify tasks are marked complete correctly | ✅ Pass |
+| `test_add_task` | Verify new tasks are added successfully | ✅ Pass |
+| `test_sort_by_time` | Verify tasks are sorted correctly by time | ✅ Pass |
+| `test_daily_task_creates_next_day_task` | Verify recurring daily tasks generate the next day's task | ✅ Pass |
+| `test_conflict_detection` | Verify scheduling conflicts are detected | ✅ Pass |
+
+## AI Feature Testing
+
+The Retrieval-Augmented Generation system was tested using multiple pet-care topics and invalid inputs.
+
+| Test Input | Expected Behavior | Result |
+|------------|-------------------|--------|
+| Dog + Exercise | Retrieve exercise guidance | ✅ Pass |
+| Cat + Sleep | Retrieve sleep guidance | ✅ Pass |
+| Hydration | Retrieve hydration guidance | ✅ Pass |
+| Missing pet name | Display warning | ✅ Pass |
+| Unsupported species | Prevent recommendation | ✅ Pass |
+| Unknown topic | Display "No guidance found" | ✅ Pass |
+
+## Overall Results
+
+- **5 out of 5 automated unit tests passed successfully.**
+- The RAG system consistently retrieved the correct knowledge base entry for supported topics.
+- Confidence scores ranging from **92%–100%** improve explainability by indicating retrieval confidence.
+- Guardrails successfully prevented invalid requests from causing application errors.
+- Logging captures recommendation requests and errors to improve debugging and reliability.
+
+---
+
+# Technologies Used
+
+- Python
+- Streamlit
+- JSON
+- PyTest
+- Logging
+- Object-Oriented Programming (OOP)
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+# Future Improvements
+
+Future enhancements could include:
+
+- Semantic search using embeddings instead of exact keyword matching.
+- Support for additional pet species.
+- Personalized recommendations based on pet age, breed, and medical history.
+- Natural language questions instead of selecting predefined topics.
+- Integration with calendar reminders and notifications.
+
+---
+
+# Documentation
+
+Additional documentation included with this project:
+
+- `README.md` — Project overview and setup instructions
+- `model_card.md` — Responsible AI reflection, limitations, AI collaboration, and future improvements
+- `diagrams/architecture.mmd` — Mermaid system architecture diagram
+
+---
+
+# Conclusion
+
+PawPal+ AI Pet Care Assistant demonstrates how a traditional object-oriented scheduling application can be enhanced with Retrieval-Augmented Generation to provide reliable AI-assisted recommendations. By combining software engineering principles with AI concepts such as retrieval, guardrails, confidence scoring, logging, and automated testing, the project delivers a more intelligent, explainable, and user-friendly pet-care assistant.

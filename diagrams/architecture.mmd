@@ -1,0 +1,35 @@
+flowchart TD
+    A[User enters pet name, species, and care topic] --> B[Streamlit Interface: app.py]
+
+    B --> C{Input validation and guardrails}
+
+    C -->|Missing pet name| D[Display warning]
+    C -->|Unsupported species| D
+    C -->|Valid input| E[RAG Assistant: rag_assistant.py]
+
+    E --> F[Retriever: retrieval.py]
+    F --> G[(Pet-Care Knowledge Base: pet_care_knowledge.json)]
+    G --> F
+
+    F --> H{Matching topic and pet type found?}
+
+    H -->|No| I[Return no-guidance message]
+    H -->|Yes| J[Return guidance and confidence score]
+
+    J --> K[Generate personalized recommendation]
+    K --> L[Add veterinary safety disclaimer]
+    L --> M[Display recommendation in Streamlit]
+
+    E --> N[(Application Log: pawpal.log)]
+    F --> N
+    K --> N
+
+    O[Automated Tests: pytest] --> P[Check scheduling and reliability]
+    P --> E
+    P --> F
+
+    M --> Q[Human reviews the recommendation]
+    Q --> R{Is the result useful and appropriate?}
+
+    R -->|Yes| S[Use the recommendation]
+    R -->|No| T[Change input or consult a veterinarian]

@@ -16,6 +16,7 @@
     "pet_type": "dog",
     "guidance": "A dog's feeding routine depends on its age, size, breed, and activity level. Many adult dogs are commonly fed about two meals per day.",
     "confidence": "98"
+  },
   {
     "topic": "feeding",
     "pet_type": "cat",
