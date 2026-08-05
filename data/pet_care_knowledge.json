@@ -1,0 +1,79 @@
+[
+  {
+    "topic": "grooming",
+    "pet_type": "dog",
+    "guidance": "Dog benefit from regular brushing, occassional bathing, and routine nail trimming. Grooming frequency depends on dog's coat type and activity level.",
+    "confidence": "95"
+  },
+  {
+    "topic": "grooming",
+    "pet_type": "cat",
+    "guidance": "Short-haired cats typically benefit from weekly brushing, while long-haired cats may need daily grooming. Nails should be trimmed every 2-3 weeks.",
+    "confidence": "96"
+  },
+  {
+    "topic": "feeding",
+    "pet_type": "dog",
+    "guidance": "A dog's feeding routine depends on its age, size, breed, and activity level. Many adult dogs are commonly fed about two meals per day.",
+    "confidence": "98"
+  {
+    "topic": "feeding",
+    "pet_type": "cat",
+    "guidance": "Cats benefit from a balanced diet, regular meal times, and constant access to fresh water.",
+    "confidence": "97"
+  },
+  {
+    "topic": "walking",
+    "pet_type": "dog",
+    "guidance": "Dogs generally benefit from regular walks for exercise and mental stimulation. The ideal length and frequency depend on age, breed, health, and energy level.",
+    "confidence": "100"
+  },
+  {
+    "topic": "exercise",
+    "pet_type": "cat",
+    "guidance": "Cats usually need a minimal amount of daily exercise to get them up and running. Around 30 minutes minimum and 10-15 minutes of playing with any toys",
+    "confidence": "94"
+  },
+  {
+    "topic": "medication",
+    "pet_type": "all",
+    "guidance": "Always consult a vet or a professional for particular types of medicine to give pets. Never give without consultation",
+    "confidence": "93"
+  },
+  {
+    "topic": "hydration",
+    "pet_type": "all",
+    "guidance": "Dogs and cats should always have access to clean, fresh water. A general guideline is about one ounce of water per pound of body weight each day, although individual needs vary.",
+    "confidence": "92"
+  },
+  {
+    "topic": "sleep",
+    "pet_type": "dog",
+    "guidance": "Dogs benefit from a quiet, comfortable sleeping area and a consistent routine. Adult dogs commonly sleep about 12–14 hours a day, while puppies and senior dogs may sleep 18–20 hours.",
+    "confidence": "90"
+  },
+  {
+    "topic": "sleep",
+    "pet_type": "cat",
+    "guidance": "Cats should have some play time before they dose off for sleep. They should have around 12-16 hours of sleep while kittens shall sleep 20",
+    "confidence": "99"
+  },
+  {
+    "topic": "playtime",
+    "pet_type": "dog",
+    "guidance": "Playtime for doggies include variety of activities like fetch, tug-of-war, and interactive toys. Ensure safe environment and supervise playtime. Around 30-60 minutes of playtime daily is recommended.",
+    "confidence": "91"
+  },
+  {
+    "topic": "playtime",
+    "pet_type": "cat",
+    "guidance": "Playtime for cats include moving toys away from reach so that they will run over and catch it. Should be around 10-15 minutes per day",
+    "confidence": "89"
+  },
+  {
+    "topic": "vet visits",
+    "pet_type": "all",
+    "guidance": "Vet visits are necesssry for both the cat and dog to ensure they are healthy and up to date on vaccinations. Schedule regular checkups and follow vet recommendations.",
+    "confidence": "95"
+  }
+]
